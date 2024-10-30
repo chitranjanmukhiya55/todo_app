@@ -1,0 +1,29 @@
+<h1>To-Do List</h1>
+
+<%= link_to 'New Task', new_task_path %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Completed</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><%= task.title %></td>
+        <td><%= task.completed ? 'Yes' : 'No' %></td>
+        <td>
+          <%= link_to 'Edit', edit_task_path(task) %> |
+          <%= link_to 'Delete', task_path(task), method: :delete, data: { confirm: 'Are you sure?' } %> |
+          <%= form_for task do |f| %>
+            <%= f.hidden_field :completed, value: !task.completed %>
+            <%= f.submit task.completed ? 'Mark as Incomplete' : 'Mark as Complete' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
